@@ -1,0 +1,13 @@
+server:
+  port: 8060
+#spring:
+#  main:
+#    allow-bean-definition-overriding: true
+#spring:
+#  application:
+#    name: sentinel-client
+#  cloud:
+#    sentinel:
+#      transport:
+#        dashboard: localhost:8058
+##        port: 8719

@@ -1,0 +1,21 @@
+server:
+  port: 8050
+spring:
+  profiles:
+    active: dev
+
+
+    #   在配置中心，可通过pefile进行配置，
+    #  只有默认的配置文件，才能结合profile进行使用
+    #  对应的dataid:${spring.application.name}-${profile}.${file-etension:properties}
+    #   不是默认配置文件的话，profile的后缀必须跟随默认配置文件的格式来
+
+
+
+#spring:
+#  # 后面的bean会覆盖前面相同名称的bean
+#  main:
+#    allow-bean-definition-overriding: true
+
+
+

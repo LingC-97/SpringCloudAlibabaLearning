@@ -1,0 +1,36 @@
+#只有当关于配置中心的东西 才写到这个bootstrap配置文件中
+spring:
+  application:
+#    会自动根据服务名称拉取dataid对应的配置文件，如果dataid跟服务名不一致，就需要手动指定dataid了
+#    跟服务名相同的dataid的配置文件，称之为默认的配置文件
+    name: com.order
+  cloud:
+    nacos:
+      server-addr: 192.168.80.1:8848  #注意这里一定是自己的nacos地址（找错找了半天）
+      username: nacos
+      password: nacos
+      config:
+        namespace: dev
+        group: tulingmall
+#nacos客户端 默认是properties文件扩展名，(只针对默认配置文件的profile)，自定义的dataid是可以随便结尾的
+#  一旦更改格式，就读取不到了需要自己配置
+#用这个进行更改配置
+        file-extension: yaml
+        shared-configs:
+          - data-id: com.common.order.properties  #[0]
+            refresh: true
+          - data-id: com.common02.order.properties  #[1]
+            refresh: true
+        extension-configs[0]:
+          data-id: com.common03.order.properties
+          refesh: true
+#            group: 默认是default froup
+#        refresh-enabled: false nacos客户端将无法感知配置的变化
+
+# 配置文件的优先级（优先级大的会覆盖优先级小的，并且会形成互补）
+#profile > 默认的配置文件 > extension-configs
+
+
+
+
+
