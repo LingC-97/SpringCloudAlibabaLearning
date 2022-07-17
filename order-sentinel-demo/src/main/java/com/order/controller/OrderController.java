@@ -2,6 +2,8 @@ package com.order.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.order.service.IOrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/order")
-public class orderController {
+public class OrderController {
 
 
     @RequestMapping("/flow")
@@ -42,6 +44,21 @@ public class orderController {
     public String get() throws InterruptedException{
         return "查询订单";
     }
+
+    @Autowired
+    IOrderService orderService;
+//关联流控 访问/add 触发/get
+    @RequestMapping("/test1")
+    public String test1() {
+        return orderService.getUser();
+    }
+//    关联流控 访问/add 触发/get
+    @RequestMapping("/test2")
+    public String test2() throws  InterruptedException{
+        return orderService.getUser();
+    }
+
+
 
 
 
