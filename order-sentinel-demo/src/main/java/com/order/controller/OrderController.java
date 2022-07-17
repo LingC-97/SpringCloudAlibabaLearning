@@ -23,12 +23,12 @@ public class OrderController {
         return  "流控！！";
 
     }
-    @RequestMapping("/flowThread")
-    @SentinelResource(value = "flowThread",blockHandler = "flowBlockHandler")
-    public String flowThread() throws InterruptedException{
-        TimeUnit.SECONDS.sleep(5);
-        return "正常访问!";
-    }
+//    @RequestMapping("/flowThread")
+//    @SentinelResource(value = "flowThread",blockHandler = "flowBlockHandler")
+//    public String flowThread() throws InterruptedException{
+//        TimeUnit.SECONDS.sleep(5);
+//        return "正常访问!";
+//    }
 
     @RequestMapping("/add")
     public String add() {
@@ -57,6 +57,23 @@ public class OrderController {
     public String test2() throws  InterruptedException{
         return orderService.getUser();
     }
+
+//    熔断降级--慢调用比例
+    @RequestMapping("/flowThread")
+    public String flowThread() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(2);  //睡了两秒来模拟慢调用
+        System.out.println("正常访问");
+        return "正常访问";
+    }
+
+//   熔断降级-- 异常比例
+    @RequestMapping("/err")
+    public String err() {
+        int a = 1/0;
+        return "hello";
+    }
+
+
 
 
 
