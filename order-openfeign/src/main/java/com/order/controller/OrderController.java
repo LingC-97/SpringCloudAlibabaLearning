@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/order")
-public class orderController {
+public class OrderController {
 
     @Autowired
     StockFeignService stockFeignService;

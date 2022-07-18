@@ -13,7 +13,7 @@
         <module>product-nacos</module>
         <module>config-nacos</module>
         <module>sentinel-demo</module>
-        <module>order-sentinel</module>
+        <module>order-openfeign-sentinel</module>
         <module>order-sentinel-demo</module>
 
     </modules>

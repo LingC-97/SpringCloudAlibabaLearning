@@ -1,0 +1,22 @@
+server:
+  port: 8041
+spring:
+  application:
+    name: order-service
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        username: nacos
+        password: nacos
+        namespace: public
+#springboot默认的日志级别是info，feign的debug日志界别就不会输入
+#全局日志
+logging:
+  level:
+    com.order.feign: debug
+feign:
+  sentinel:
+#    openfeign整合sentinel
+    enabled: true
+
