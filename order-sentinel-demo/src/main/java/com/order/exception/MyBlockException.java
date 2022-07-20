@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 @Component
 @Slf4j
 public class MyBlockException implements BlockExceptionHandler {
@@ -26,22 +27,22 @@ public class MyBlockException implements BlockExceptionHandler {
 //        getRule()会包含我们的资源规则的详细信息（阈值）
 
 
-        log.info("BlockExceptionHandler BlockException================"+e.getRule());
+        log.info("BlockExceptionHandler BlockException================" + e.getRule());
         Result r = null;
         if (e instanceof FlowException) {
-            r = Result.error(100,"接口限流了");
+            r = Result.error(100, "接口限流了");
 
         } else if (e instanceof DegradeException) {
-            r = Result.error(101,"服务降级了");
+            r = Result.error(101, "服务降级了");
 
         } else if (e instanceof ParamFlowException) {
-            r = Result.error(102,"热点参数限流了");
+            r = Result.error(102, "热点参数限流了");
 
         } else if (e instanceof SystemBlockException) {
-            r = Result.error(103,"触发系统保护规则了");
+            r = Result.error(103, "触发系统保护规则了");
 
         } else if (e instanceof AuthorityException) {
-            r = Result.error(104,"授权规则不通过");
+            r = Result.error(104, "授权规则不通过");
         }
 
         //返回json数据

@@ -40,10 +40,10 @@ public class Result<T> {
         this.code = code;
         this.msg = msg;
     }
-    public static Result error(Integer code,String msg){
-        return new Result(code,msg);
-    }
 
+    public static Result error(Integer code, String msg) {
+        return new Result(code, msg);
+    }
 
 
 }

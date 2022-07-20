@@ -15,7 +15,7 @@ stock-service:
   ribbon:
     NFLoadBanlancerRUleClassName: com.ribbon.rule.CustomRule
 ribbon:
-# 开启ribbon饥饿加载
+  # 开启ribbon饥饿加载
   eager-load:
     #配置mall-user使用ribbon饥饿加载，多个使用逗号分隔
     enabled: true

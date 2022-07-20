@@ -1,8 +1,8 @@
 #只有当关于配置中心的东西 才写到这个bootstrap配置文件中
 spring:
   application:
-#    会自动根据服务名称拉取dataid对应的配置文件，如果dataid跟服务名不一致，就需要手动指定dataid了
-#    跟服务名相同的dataid的配置文件，称之为默认的配置文件
+    #    会自动根据服务名称拉取dataid对应的配置文件，如果dataid跟服务名不一致，就需要手动指定dataid了
+    #    跟服务名相同的dataid的配置文件，称之为默认的配置文件
     name: com.order
   cloud:
     nacos:
@@ -12,9 +12,9 @@ spring:
       config:
         namespace: dev
         group: tulingmall
-#nacos客户端 默认是properties文件扩展名，(只针对默认配置文件的profile)，自定义的dataid是可以随便结尾的
-#  一旦更改格式，就读取不到了需要自己配置
-#用这个进行更改配置
+        #nacos客户端 默认是properties文件扩展名，(只针对默认配置文件的profile)，自定义的dataid是可以随便结尾的
+        #  一旦更改格式，就读取不到了需要自己配置
+        #用这个进行更改配置
         file-extension: yaml
         shared-configs:
           - data-id: com.common.order.properties  #[0]

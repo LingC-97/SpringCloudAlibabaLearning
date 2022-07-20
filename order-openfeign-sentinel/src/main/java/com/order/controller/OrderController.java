@@ -14,14 +14,13 @@ public class OrderController {
 
 
     @RequestMapping("/add")
-    public String add(){
+    public String add() {
         System.out.println("下单成功");
         String msg = stockFeignService.reduct();
 
-       return "hello feign"+msg;
+        return "hello feign" + msg;
 
     }
-
 
 
 }

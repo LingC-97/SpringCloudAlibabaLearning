@@ -9,7 +9,7 @@ public class Demo2 {
         arr[2] = new Integer(10);
         arr[3] = new Demo2();
 
-        for (Object obj1:arr) {
+        for (Object obj1 : arr) {
             System.out.println(obj1.toString());
         }
     }

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 //@Configuration
 public class FeignConfig {
     @Bean
-    public Logger.Level feignLoggerLevel(){
+    public Logger.Level feignLoggerLevel() {
         return Logger.Level.FULL;
     }
 ////超时时间配置
@@ -21,7 +21,6 @@ public class FeignConfig {
 //    public FeignAuthRequestInterceptor feignAuthRequestInterceptor(){
 //        return new FeignAuthRequestInterceptor();
 //    }
-
 
 
 }

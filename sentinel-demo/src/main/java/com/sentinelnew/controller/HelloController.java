@@ -24,52 +24,51 @@ import java.util.List;
 @RestController
 @Slf4j
 public class HelloController {
-    private static final String ESOURCE_NAME="hello";
-    private static final String USER_RESOURCE_NAME="user";
-    private static final String DEGRADE_RESOURCE_NAME="degrade";
-
+    private static final String ESOURCE_NAME = "hello";
+    private static final String USER_RESOURCE_NAME = "user";
+    private static final String DEGRADE_RESOURCE_NAME = "degrade";
 
 
     @GetMapping(value = "/hello")
-    public String hello(){
+    public String hello() {
         Entry entry = null;
-        try{
+        try {
 //            sentinel 针对资源进行限制
             entry = SphU.entry(ESOURCE_NAME);
 //            被保护的业务逻辑
             String str = "hello world";
-            log.info("====="+str+"=====");
+            log.info("=====" + str + "=====");
             return str;
 
 
-        }catch  (BlockException e) {
+        } catch (BlockException e) {
 //            资源访问组织，被限流或者被降级
             log.info("block!");
             return "被流控了！";
-        }catch (Exception e) {
+        } catch (Exception e) {
 //            若需要配置降级规则，需要通过这种方式记录业务异常
-            Tracer.traceEntry(e,entry);
+            Tracer.traceEntry(e, entry);
 //            e.printStackTrace();
-        }finally {
+        } finally {
 //            若需要配置降级规则，需要通过这种方式记录业务异常
-            if(entry !=null){
+            if (entry != null) {
                 entry.exit();
             }
         }
-        return  null;
+        return null;
 
     }
 
 
     //    和xml中的这个语句是一样的作用<bean init-method>。这是spring的注解
-   // @PostConstruct  /*这个注解的作用：在helloController这个bean在创建之后，会初始调用下面这个方法*/
+    // @PostConstruct  /*这个注解的作用：在helloController这个bean在创建之后，会初始调用下面这个方法*/
 
     @PostConstruct
-    public static  void initFlowRules(){
+    public static void initFlowRules() {
         //流控
         List<FlowRule> rules = new ArrayList<>();
 //
-        FlowRule rule =new FlowRule();
+        FlowRule rule = new FlowRule();
 //      为哪个资源进行流控
         rule.setResource(ESOURCE_NAME);
 //        设置流控规则QPS
@@ -79,7 +78,7 @@ public class HelloController {
         rule.setCount(1);//每秒钟只访问一次是可以的，多了就会被流控
         rules.add(rule);
 
-        FlowRule rule2 =new FlowRule();
+        FlowRule rule2 = new FlowRule();
         rule2.setResource(USER_RESOURCE_NAME);
         rule2.setGrade(RuleConstant.FLOW_GRADE_QPS);
         rule2.setCount(1);
@@ -88,12 +87,9 @@ public class HelloController {
     }
 
 
-
-
-
-//    和xml中的这个语句是一样的作用<bean init-method>。这是spring的注解
+    //    和xml中的这个语句是一样的作用<bean init-method>。这是spring的注解
     @PostConstruct  /*这个注解的作用：在helloController这个bean在创建之后，会初始调用下面这个方法*/
-    public void initDegradeRule(){
+    public void initDegradeRule() {
 //        降级规则,异常
         List<DegradeRule> degradeRules = new ArrayList<>();
         DegradeRule degradeRule = new DegradeRule();
@@ -105,7 +101,7 @@ public class HelloController {
 //        触发熔断最小请求数，触发两次，才熔断，实际开发中要比2次多
         degradeRule.setMinRequestAmount(2);
 //        统计时长，多长时间段内请求了两次就给熔断
-        degradeRule.setStatIntervalMs(60*1000);  //1分钟
+        degradeRule.setStatIntervalMs(60 * 1000);  //1分钟
 //        这三个组合起来的意思就是： 一分钟内执行了两次，出现了2次异常，就会触发熔断
 //        熔断持续时长 ；10秒
 //        在这10秒内，一旦触发了熔断，再次请求对应的接口就会直接调用降级方法
@@ -139,39 +135,36 @@ blockHandler方法有注意的地方
 * */
 
     @RequestMapping("/user")
-    @SentinelResource(value = USER_RESOURCE_NAME,fallback = "fallbackHandlerForGetUser",
-           /* exceptionsToIgnore = {ArithmeticException.class},*/
+    @SentinelResource(value = USER_RESOURCE_NAME, fallback = "fallbackHandlerForGetUser",
+            /* exceptionsToIgnore = {ArithmeticException.class},*/
             blockHandler = "blockHandlerForGetUser")
-    public User user(String id){
+    public User user(String id) {
 //        int a = 1/0;
         return new User("xuxu");
 
     }
-    public  User blockHandlerForGetUser(String id, BlockException e){
+
+    public User blockHandlerForGetUser(String id, BlockException e) {
         e.printStackTrace();
         return new User("流控!!");
     }
-    public User fallbackHandlerForGetUser(String id ,Throwable e){
+
+    public User fallbackHandlerForGetUser(String id, Throwable e) {
         e.printStackTrace();
         return new User("异常处理");
     }
 
     @RequestMapping("/degrade")
-    @SentinelResource(value = DEGRADE_RESOURCE_NAME,entryType = EntryType.IN,
+    @SentinelResource(value = DEGRADE_RESOURCE_NAME, entryType = EntryType.IN,
             blockHandler = "blockHandlerForFb")
-    public User degrade(String id) throws InterruptedException{
+    public User degrade(String id) throws InterruptedException {
         throw new RuntimeException("异常!!");
     }
 
 
-    public User blockHandlerForFb(String id,BlockException e){
+    public User blockHandlerForFb(String id, BlockException e) {
         return new User("熔断降级");
     }
-
-
-
-
-
 
 
 }

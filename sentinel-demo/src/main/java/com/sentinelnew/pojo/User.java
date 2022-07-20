@@ -6,5 +6,5 @@ import lombok.NoArgsConstructor;
 
 @Data
 public class User {
-   private final String name;
+    private final String name;
 }

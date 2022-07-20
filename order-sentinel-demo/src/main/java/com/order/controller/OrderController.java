@@ -4,6 +4,7 @@ import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.order.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,9 +20,9 @@ public class OrderController {
     public String flow() {
         return "正常访问";
     }
-    public String flowBlockHandler(BlockException e){
-        return  "流控！！";
 
+    public String flowBlockHandler(BlockException e) {
+        return "流控！！";
     }
 //    @RequestMapping("/flowThread")
 //    @SentinelResource(value = "flowThread",blockHandler = "flowBlockHandler")
@@ -41,24 +42,26 @@ public class OrderController {
 //    关联资源：/order/add
 
     @RequestMapping("/get")
-    public String get() throws InterruptedException{
+    public String get() throws InterruptedException {
         return "查询订单";
     }
 
     @Autowired
     IOrderService orderService;
-//关联流控 访问/add 触发/get
+
+    //关联流控 访问/add 触发/get
     @RequestMapping("/test1")
     public String test1() {
         return orderService.getUser();
     }
-//    关联流控 访问/add 触发/get
+
+    //    关联流控 访问/add 触发/get
     @RequestMapping("/test2")
-    public String test2() throws  InterruptedException{
+    public String test2() throws InterruptedException {
         return orderService.getUser();
     }
 
-//    熔断降级--慢调用比例
+    //    熔断降级--慢调用比例
     @RequestMapping("/flowThread")
     public String flowThread() throws InterruptedException {
         TimeUnit.SECONDS.sleep(2);  //睡了两秒来模拟慢调用
@@ -66,18 +69,24 @@ public class OrderController {
         return "正常访问";
     }
 
-//   熔断降级-- 异常比例
+    //   熔断降级-- 异常比例
     @RequestMapping("/err")
     public String err() {
-        int a = 1/0;
+        int a = 1 / 0;
         return "hello";
     }
 
+    //    热点规则，必须使用@SentinelResource来使用
+    @RequestMapping("/get/{id}")
+    @SentinelResource(value = "getById", blockHandler = "HotBlockHandler")
+    public String getById(@PathVariable("id") Integer id) {
+        System.out.println("正常访问");
+        return "正常访问！";
+    }
 
-
-
-
-
+    public String HotBlockHandler(@PathVariable("id") Integer id, BlockException e) {
+        return "热点异常处理";
+    }
 
 
 }

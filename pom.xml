@@ -37,7 +37,6 @@
     </properties>
 
 
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -75,7 +74,6 @@
         </dependency>
 
     </dependencies>
-
 
 
     <build>

@@ -21,9 +21,9 @@ feign:
       product-service:
         loggerLevel: BASIC
         contract: feign.Contract.Default #设置为默认的契约（在接口那里必须还原成员生注解）
-#        连接超时时间，默认2秒
+        #        连接超时时间，默认2秒
         connectTimeout: 5000
-#        请求处理超时时间，默认5秒
+        #        请求处理超时时间，默认5秒
         readTimeout: 10000
         requestInterceptors[0]:
           com.order.interceptor.feign.CustomFeignInterceptor

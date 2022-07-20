@@ -11,14 +11,15 @@ import javax.annotation.Resource;
 @SpringBootApplication
 public class OrderApplication {
 
-    public static void main(String[] args){
-        SpringApplication.run(OrderApplication.class,args);
+    public static void main(String[] args) {
+        SpringApplication.run(OrderApplication.class, args);
 
     }
+
     @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder){
-       RestTemplate restTemplate = builder.build();
-       return restTemplate;
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
+        RestTemplate restTemplate = builder.build();
+        return restTemplate;
 
     }
 

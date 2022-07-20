@@ -8,3 +8,11 @@ spring:
       transport:
         dashboard: 127.0.0.1:8858
       web-context-unify: false   #默认将调用链路收敛了
+      datasource:
+        flowsrule: #可以自定义
+          server-addr: 192.168.80.1:8848
+          username: nacos
+          password: nacos
+          dataId: order-sentinel-flow-rule
+          rule-type: flow
+

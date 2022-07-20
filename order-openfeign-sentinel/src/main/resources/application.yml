@@ -17,6 +17,6 @@ logging:
     com.order.feign: debug
 feign:
   sentinel:
-#    openfeign整合sentinel
+    #    openfeign整合sentinel
     enabled: true
 

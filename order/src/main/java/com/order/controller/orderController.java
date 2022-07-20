@@ -12,13 +12,13 @@ import org.springframework.web.client.RestTemplate;
 public class orderController {
     @Autowired
     public RestTemplate restTemplate;
-    @RequestMapping("add")
-    public String add(){
-        System.out.println("下单成功");
-        String msg = restTemplate.getForObject("http://localhost:8011/stock/reduct",String.class);
-        return "hello world"+msg;
-    }
 
+    @RequestMapping("add")
+    public String add() {
+        System.out.println("下单成功");
+        String msg = restTemplate.getForObject("http://localhost:8011/stock/reduct", String.class);
+        return "hello world" + msg;
+    }
 
 
 }
