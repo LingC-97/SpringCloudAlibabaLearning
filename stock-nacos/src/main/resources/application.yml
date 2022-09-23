@@ -10,4 +10,4 @@ spring:
         username: nacos
         password: nacos
         namespace: public
-        ephemeral: false  #永久实例，宕机了也不会被剔除掉
+#        ephemeral: false  #永久实例，宕机了也不会被剔除掉

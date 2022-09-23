@@ -1,0 +1,47 @@
+# -*- coding: utf-8 -*-
+server:
+  port: 8088
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    #gateway的配置
+    gateway:
+    #      #路由规则
+      routes:
+        - id: order_route    #路由的唯一标识，路由到order，这是比较标准的命名格式
+          uri: lb://order-service  #这里写order服务对应的服务名就可以了  lb:使用nacos中本地负载均衡策略
+          predicates:
+            - Path=/order/**
+#            - After=2000-12-31T23:59:59.789+08:00[Asia/Shanghai]
+#            - Header=X-Request-Id,\d+
+#            - Method=GET
+#            - Query=name,xushu|zhuge
+#            - CheckAuth=xushu  #现在这个xushu是等于CheckAuthRoutePredicateFactory类中equals的xushu，所以访问这个路径http://localhost:8088/order/add是可以访问的通，如果换成xushu2就不能了。
+
+          #配置过滤工厂，添加请求头
+          filters:
+            - CheckAuth=xushu
+#            - AddRequestHeader=X‐Request‐color,red
+            - PrefixPath=/mall-order
+#            - RedirectTo=302,https://www.baidu.com/
+
+
+
+#          #断言规则 用于路由规则的匹配
+#          predicates:
+#            - Path=/order-serv/**
+##              http://localhost:8088/order-serv/order/add ↓
+##              http://localhost:8020/order-serv/order/add
+#          filters:
+#            - StripPrefix=1  #转发之前去掉第一层路径
+##              http://localhost:8020/order/add
+
+
+#        - id: stock_route
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848 #这里随着你order的哪个nacos地址走
+        username: nacos
+        password: nacos
+

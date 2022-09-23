@@ -20,7 +20,7 @@ public class OrderApplication {
     }
 
     @Bean
-    @LoadBalanced  //有了负载均衡的一个调用机制，解析服务名称（就是你在配置文件中的servername=srock-service），对应调用的地址
+    @LoadBalanced  //有了负载均衡的一个调用机制，解析服务名称（就是你在配置文件中的servername=sro ck-service），对应调用的地址
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         RestTemplate restTemplate = builder.build();
         return restTemplate;
